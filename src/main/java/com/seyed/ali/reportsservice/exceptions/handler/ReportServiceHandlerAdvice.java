@@ -2,7 +2,7 @@ package com.seyed.ali.reportsservice.exceptions.handler;
 
 import com.seyed.ali.reportsservice.exceptions.OperationNotSupportedException;
 import com.seyed.ali.reportsservice.exceptions.ResourceNotFoundException;
-import com.seyed.ali.reportsservice.model.payload.Result;
+import com.seyed.ali.reportsservice.model.payload.response.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
