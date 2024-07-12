@@ -2,6 +2,7 @@ package com.seyed.ali.reportsservice.client;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.seyed.ali.reportsservice.model.payload.dto.Task;
 import com.seyed.ali.reportsservice.model.payload.dto.TimeEntry;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
 import com.seyed.ali.reportsservice.util.KeycloakSecurityUtil;
@@ -16,22 +17,22 @@ import java.util.List;
 @SuppressWarnings("FieldCanBeLocal")
 @Slf4j
 @Component
-public class TimeEntryServiceClient extends ServiceClient{
+public class TaskServiceClient extends ServiceClient{
 
-    private final String timeEntryServiceBaseURL = "http://localhost:8082/api/v1/time"; // TODO: remember to change the host and port when dockerizing the application
+    private final String taskServiceBaseURL = "http://localhost:8084/api/v1/task"; // TODO: remember to change the host and port when dockerizing the application
     private final ObjectMapper objectMapper;
 
-    public TimeEntryServiceClient(KeycloakSecurityUtil keycloakSecurityUtil, WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
-        super(keycloakSecurityUtil, webClientBuilder);
+    public TaskServiceClient(KeycloakSecurityUtil keycloakSecurityUtil, WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
+        super(keycloakSecurityUtil, webClientBuilder, objectMapper);
         this.objectMapper = objectMapper;
     }
 
-    public List<TimeEntry> getTimeEntryByProject(String projectCriteria) {
-        String url = this.timeEntryServiceBaseURL + "/project/" + projectCriteria;
+    public List<Task> findAllTasksForProject(String projectId) {
+        String url = this.taskServiceBaseURL + "/" + projectId;
         Result result = this.sendRequest(url, HttpMethod.GET, new ParameterizedTypeReference<>() {
         });
 
-        JavaType constructedCollectionType = this.objectMapper.getTypeFactory().constructCollectionType(List.class, TimeEntry.class);
+        JavaType constructedCollectionType = this.objectMapper.getTypeFactory().constructCollectionType(List.class, Task.class);
         return this.objectMapper.convertValue(result.getData(), constructedCollectionType);
     }
 

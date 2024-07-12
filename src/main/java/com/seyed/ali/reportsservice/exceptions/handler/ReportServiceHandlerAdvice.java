@@ -37,9 +37,10 @@ public class ReportServiceHandlerAdvice {
 
     @ExceptionHandler({Exception.class})
     public ResponseEntity<Result> handleException(Exception e) {
-        return ResponseEntity.status(NOT_FOUND).body(new Result(
+        log.error("🚫exception: {}", e.getMessage());
+        return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new Result(
                 false,
-                NOT_FOUND,
+                INTERNAL_SERVER_ERROR,
                 "Exception Has Occurred!!!",
                 "🚫 - " + e.getMessage()
         ));

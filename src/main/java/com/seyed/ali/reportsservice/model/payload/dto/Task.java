@@ -17,7 +17,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TaskDTO implements Serializable {
+public class Task implements Serializable {
 
     @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "Unique identifier for the task", example = "12345")
     private String taskId;

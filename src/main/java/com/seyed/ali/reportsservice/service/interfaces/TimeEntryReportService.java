@@ -1,7 +1,9 @@
 package com.seyed.ali.reportsservice.service.interfaces;
 
+import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
+
 public interface TimeEntryReportService {
 
-    Object timeEntryReportByProject(String projectCriteria);
+    TimeEntryReport timeEntryReportByProject(String projectCriteria);
 
 }

@@ -12,11 +12,11 @@ import java.util.List;
 /**
  * DTO for {@link com.seyed.ali.projectservice.model.domain.Project} in {@code Project-Service}
  */
-@SuppressWarnings("JavadocReference")
+@SuppressWarnings({"JavadocReference", "unused"})
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ProjectDTO implements Serializable {
+public class Project implements Serializable {
 
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "Unique identifier for the project", example = "12345")
         private String projectId;
@@ -27,14 +27,14 @@ public class ProjectDTO implements Serializable {
         @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "The project name", example = "Learning microservices is really exciting and HARD ;)")
         private String projectDescription;
 
-        @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "The task associated with the project", implementation = TaskDTO.class)
-        private List<TaskDTO> taskDTO = new ArrayList<>();
+        @Schema(requiredMode = Schema.RequiredMode.NOT_REQUIRED, description = "The task associated with the project", implementation = Task.class)
+        private List<Task> task = new ArrayList<>();
 
-        public ProjectDTO(String projectId, String projectName, String projectDescription) {
+        public Project(String projectId, String projectName, String projectDescription) {
                 this.projectId = projectId;
                 this.projectName = projectName;
                 this.projectDescription = projectDescription;
-                this.taskDTO = new ArrayList<>();
+                this.task = new ArrayList<>();
         }
 
 }

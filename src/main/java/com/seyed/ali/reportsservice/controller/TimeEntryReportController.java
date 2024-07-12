@@ -1,6 +1,6 @@
 package com.seyed.ali.reportsservice.controller;
 
-import com.seyed.ali.reportsservice.model.payload.TimeEntryReport;
+import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
 import com.seyed.ali.reportsservice.service.interfaces.TimeEntryReportService;
 import io.swagger.v3.oas.annotations.Operation;
