@@ -2,7 +2,8 @@ package com.seyed.ali.reportsservice.controller;
 
 import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
-import com.seyed.ali.reportsservice.service.interfaces.TimeEntryReportService;
+import com.seyed.ali.reportsservice.service.ProjectBasedReportStrategy;
+import com.seyed.ali.reportsservice.service.TaskBasedReportStrategy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -35,7 +36,8 @@ import org.springframework.web.bind.annotation.RestController;
 )
 public class TimeEntryReportController {
 
-    private final TimeEntryReportService timeEntryReportService;
+    private final ProjectBasedReportStrategy projectReport;
+    private final TaskBasedReportStrategy taskReport;
 
     @GetMapping("/project/{projectCriteria}")
     @Operation(
@@ -53,7 +55,27 @@ public class TimeEntryReportController {
                 true,
                 HttpStatus.OK,
                 "TimeEntry Report - Criteria: Project",
-                this.timeEntryReportService.timeEntryReportByProject(projectCriteria)
+                this.projectReport.generateReport(projectCriteria)
+        ));
+    }
+
+    @GetMapping("/task/{taskName}")
+    @Operation(
+            summary = "TimeEntry Report - \"TASK\"",
+            description = "Retrieves all the time entries by 'TaskName'",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = TimeEntryReport.class)))
+                    )
+            })
+    public ResponseEntity<Result> filterReportByTask(@PathVariable String taskName) {
+        return ResponseEntity.ok(new Result(
+                true,
+                HttpStatus.OK,
+                "TimeEntry Report - Criteria: Task",
+                this.taskReport.generateReport(taskName)
         ));
     }
 

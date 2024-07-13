@@ -35,4 +35,13 @@ public class TimeEntryServiceClient extends ServiceClient{
         return this.objectMapper.convertValue(result.getData(), constructedCollectionType);
     }
 
+    public List<TimeEntry> getTimeEntryByTask(String taskName) {
+        String url = this.timeEntryServiceBaseURL + "/task/" + taskName;
+        Result result = this.sendRequest(url, HttpMethod.GET, new ParameterizedTypeReference<>() {
+        });
+
+        JavaType constructedCollectionType = this.objectMapper.getTypeFactory().constructCollectionType(List.class, TimeEntry.class);
+        return this.objectMapper.convertValue(result.getData(), constructedCollectionType);
+    }
+
 }

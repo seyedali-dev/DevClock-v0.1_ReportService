@@ -23,7 +23,7 @@ public class TaskServiceClient extends ServiceClient{
     private final ObjectMapper objectMapper;
 
     public TaskServiceClient(KeycloakSecurityUtil keycloakSecurityUtil, WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
-        super(keycloakSecurityUtil, webClientBuilder, objectMapper);
+        super(keycloakSecurityUtil, webClientBuilder);
         this.objectMapper = objectMapper;
     }
 
