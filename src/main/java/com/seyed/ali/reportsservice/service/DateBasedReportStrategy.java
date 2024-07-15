@@ -12,19 +12,19 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class TaskBasedReportStrategy extends ReportStrategyBase {
+public class DateBasedReportStrategy extends ReportStrategyBase {
 
-    public TaskBasedReportStrategy(TimeEntryServiceClient timeEntryServiceClient, ProjectServiceClient projectServiceClient, TaskServiceClient taskServiceClient) {
+    public DateBasedReportStrategy(TimeEntryServiceClient timeEntryServiceClient, ProjectServiceClient projectServiceClient, TaskServiceClient taskServiceClient) {
         super(timeEntryServiceClient, projectServiceClient, taskServiceClient);
     }
 
     @Override
     public TimeEntryReport generateReport(ReportContext reportContext) {
-        List<TimeEntry> timeEntryByTask = this.timeEntryServiceClient.getTimeEntryByTask(reportContext.getCriteria());
-        Project project = this.getProject(timeEntryByTask);
+        List<TimeEntry> timeEntriesForLastMonth = this.timeEntryServiceClient.getTimeEntriesForLastMonth();
+        Project project = this.getProject(timeEntriesForLastMonth);
         List<Task> allTasksForProject = this.getTasks(project.getProjectId());
 
-        return this.timeEntryReportBuilder(timeEntryByTask, project, allTasksForProject);
+        return this.timeEntryReportBuilder(timeEntriesForLastMonth, project, allTasksForProject);
     }
 
 }

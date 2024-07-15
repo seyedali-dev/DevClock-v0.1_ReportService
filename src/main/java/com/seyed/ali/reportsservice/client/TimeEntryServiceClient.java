@@ -44,4 +44,13 @@ public class TimeEntryServiceClient extends ServiceClient{
         return this.objectMapper.convertValue(result.getData(), constructedCollectionType);
     }
 
+    public List<TimeEntry> getTimeEntriesForLastMonth() {
+        String url = this.timeEntryServiceBaseURL + "/date/last-month";
+        Result result = this.sendRequest(url, HttpMethod.GET, new ParameterizedTypeReference<>() {
+        });
+
+        JavaType constructedCollectionType = this.objectMapper.getTypeFactory().constructCollectionType(List.class, TimeEntry.class);
+        return this.objectMapper.convertValue(result.getData(), constructedCollectionType);
+    }
+
 }

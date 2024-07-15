@@ -19,8 +19,8 @@ public class ProjectBasedReportStrategy extends ReportStrategyBase {
     }
 
     @Override
-    public TimeEntryReport generateReport(String projectCriteria) {
-        List<TimeEntry> timeEntriesByProject = this.timeEntryServiceClient.getTimeEntryByProject(projectCriteria);
+    public TimeEntryReport generateReport(ReportContext reportContext) {
+        List<TimeEntry> timeEntriesByProject = this.timeEntryServiceClient.getTimeEntryByProject(reportContext.getCriteria());
         Project project = this.getProject(timeEntriesByProject);
         List<Task> allTasksForProject = this.getTasks(project.getProjectId());
 

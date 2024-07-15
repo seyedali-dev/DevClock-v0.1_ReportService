@@ -2,7 +2,9 @@ package com.seyed.ali.reportsservice.controller;
 
 import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
+import com.seyed.ali.reportsservice.service.DateBasedReportStrategy;
 import com.seyed.ali.reportsservice.service.ProjectBasedReportStrategy;
+import com.seyed.ali.reportsservice.service.ReportContext;
 import com.seyed.ali.reportsservice.service.TaskBasedReportStrategy;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
@@ -38,6 +40,7 @@ public class TimeEntryReportController {
 
     private final ProjectBasedReportStrategy projectReport;
     private final TaskBasedReportStrategy taskReport;
+    private final DateBasedReportStrategy dateBasedReportStrategy;
 
     @GetMapping("/project/{projectCriteria}")
     @Operation(
@@ -51,11 +54,13 @@ public class TimeEntryReportController {
                     )
             })
     public ResponseEntity<Result> filterReportByProject(@PathVariable String projectCriteria) {
+        ReportContext reportContext = new ReportContext();
+        reportContext.setCriteria(projectCriteria);
         return ResponseEntity.ok(new Result(
                 true,
                 HttpStatus.OK,
                 "TimeEntry Report - Criteria: Project",
-                this.projectReport.generateReport(projectCriteria)
+                this.projectReport.generateReport(reportContext)
         ));
     }
 
@@ -71,11 +76,33 @@ public class TimeEntryReportController {
                     )
             })
     public ResponseEntity<Result> filterReportByTask(@PathVariable String taskName) {
+        ReportContext reportContext = new ReportContext();
+        reportContext.setCriteria(taskName);
         return ResponseEntity.ok(new Result(
                 true,
                 HttpStatus.OK,
                 "TimeEntry Report - Criteria: Task",
-                this.taskReport.generateReport(taskName)
+                this.taskReport.generateReport(reportContext)
+        ));
+    }
+
+    @GetMapping("/date/last-month")
+    @Operation(
+            summary = "TimeEntry Report - \"DATE::LastMonth\"",
+            description = "Retrieves all the time entries for the 'LastMonth'",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = TimeEntryReport.class)))
+                    )
+            })
+    public ResponseEntity<Result> filterReportForTheLastMonth() {
+        return ResponseEntity.ok(new Result(
+                true,
+                HttpStatus.OK,
+                "TimeEntry Report - Criteria: Date::LastMonth",
+                this.dateBasedReportStrategy.generateReport(new ReportContext())
         ));
     }
 
