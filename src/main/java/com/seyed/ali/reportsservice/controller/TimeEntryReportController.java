@@ -101,7 +101,7 @@ public class TimeEntryReportController {
         return ResponseEntity.ok(new Result(
                 true,
                 HttpStatus.OK,
-                "TimeEntry Report - Criteria: Date::LastMonth",
+                "TimeEntry Report - Criteria: Date",
                 this.dateBasedReportStrategy.generateReport(reportContext)
         ));
     }

@@ -24,7 +24,7 @@ public class DateBasedReportStrategy extends ReportStrategyBase {
     public TimeEntryReport generateReport(ReportContext reportContext) {
         List<TimeEntry> timeEntryList = new ArrayList<>();
         switch (reportContext.getTimePeriod()) {
-            case DAY->{}
+            case DAY -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastDay();
             case WEEK -> {}
             case MONTH -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastMonth();
             default -> throw new OperationNotSupportedException("Invalid time period: " + reportContext.getTimePeriod());
