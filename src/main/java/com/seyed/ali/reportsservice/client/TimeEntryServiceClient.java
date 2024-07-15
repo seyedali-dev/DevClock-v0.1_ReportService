@@ -54,4 +54,9 @@ public class TimeEntryServiceClient extends ServiceClient{
         return getTimeEntriesAndConstructToList(url);
     }
 
+    public List<TimeEntry> getTimeEntriesForLastWeek() {
+        String url = this.timeEntryServiceBaseURL + "/date/last-week";
+        return getTimeEntriesAndConstructToList(url);
+    }
+
 }
