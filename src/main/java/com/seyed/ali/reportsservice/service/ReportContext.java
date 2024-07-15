@@ -1,5 +1,6 @@
 package com.seyed.ali.reportsservice.service;
 
+import com.seyed.ali.reportsservice.model.enums.TimePeriod;
 import lombok.Data;
 
 import java.time.LocalDate;
@@ -8,6 +9,6 @@ import java.time.LocalDate;
 public class ReportContext {
 
     private String criteria;
-    private LocalDate date;
+    private TimePeriod timePeriod;
 
 }

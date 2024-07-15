@@ -1,5 +1,6 @@
 package com.seyed.ali.reportsservice.controller;
 
+import com.seyed.ali.reportsservice.model.enums.TimePeriod;
 import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
 import com.seyed.ali.reportsservice.service.DateBasedReportStrategy;
@@ -16,10 +17,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -86,10 +84,10 @@ public class TimeEntryReportController {
         ));
     }
 
-    @GetMapping("/date/last-month")
+    @GetMapping("/date")
     @Operation(
-            summary = "TimeEntry Report - \"DATE::LastMonth\"",
-            description = "Retrieves all the time entries for the 'LastMonth'",
+            summary = "TimeEntry Report - \"DATE\"",
+            description = "Retrieves all the time entries for the specified 'Date'",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -97,12 +95,14 @@ public class TimeEntryReportController {
                             content = @Content(array = @ArraySchema(schema = @Schema(implementation = TimeEntryReport.class)))
                     )
             })
-    public ResponseEntity<Result> filterReportForTheLastMonth() {
+    public ResponseEntity<Result> filterReportByDate(@RequestParam TimePeriod timePeriod) {
+        ReportContext reportContext = new ReportContext();
+        reportContext.setTimePeriod(timePeriod);
         return ResponseEntity.ok(new Result(
                 true,
                 HttpStatus.OK,
                 "TimeEntry Report - Criteria: Date::LastMonth",
-                this.dateBasedReportStrategy.generateReport(new ReportContext())
+                this.dateBasedReportStrategy.generateReport(reportContext)
         ));
     }
 
