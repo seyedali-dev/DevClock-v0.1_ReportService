@@ -3,7 +3,6 @@ package com.seyed.ali.reportsservice.client;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.seyed.ali.reportsservice.model.payload.dto.Task;
-import com.seyed.ali.reportsservice.model.payload.dto.TimeEntry;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
 import com.seyed.ali.reportsservice.util.KeycloakSecurityUtil;
 import lombok.extern.slf4j.Slf4j;

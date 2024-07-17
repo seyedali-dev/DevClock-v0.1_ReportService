@@ -1,10 +1,6 @@
 package com.seyed.ali.reportsservice.model.payload.dto;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
 import lombok.*;
 
 import java.io.Serializable;

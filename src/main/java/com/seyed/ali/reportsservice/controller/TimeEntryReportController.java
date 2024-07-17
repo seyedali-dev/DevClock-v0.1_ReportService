@@ -1,8 +1,8 @@
 package com.seyed.ali.reportsservice.controller;
 
 import com.seyed.ali.reportsservice.model.enums.TimePeriod;
-import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import com.seyed.ali.reportsservice.model.payload.response.Result;
+import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import com.seyed.ali.reportsservice.service.DateBasedReportStrategy;
 import com.seyed.ali.reportsservice.service.ProjectBasedReportStrategy;
 import com.seyed.ali.reportsservice.service.ReportContext;

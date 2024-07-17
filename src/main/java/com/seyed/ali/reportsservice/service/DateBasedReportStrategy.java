@@ -10,7 +10,6 @@ import com.seyed.ali.reportsservice.model.payload.dto.TimeEntry;
 import com.seyed.ali.reportsservice.model.payload.response.TimeEntryReport;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
