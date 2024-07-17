@@ -59,4 +59,9 @@ public class TimeEntryServiceClient extends ServiceClient{
         return getTimeEntriesAndConstructToList(url);
     }
 
+    public List<TimeEntry> getTimeEntriesForToday() {
+        String url = this.timeEntryServiceBaseURL + "/date/today";
+        return getTimeEntriesAndConstructToList(url);
+    }
+
 }
