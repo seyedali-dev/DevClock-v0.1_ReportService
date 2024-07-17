@@ -8,6 +8,7 @@ import com.seyed.ali.reportsservice.service.ProjectBasedReportStrategy;
 import com.seyed.ali.reportsservice.service.ReportContext;
 import com.seyed.ali.reportsservice.service.TaskBasedReportStrategy;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,9 +16,12 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequiredArgsConstructor
@@ -84,6 +88,30 @@ public class TimeEntryReportController {
         ));
     }
 
+    @GetMapping("/time-period")
+    @Operation(
+            summary = "TimeEntry Report - \"TIME-PERIOD\"",
+            description = "Retrieves all the time entries for the specified 'TimePeriod'",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Successful operation",
+                            content = @Content(array = @ArraySchema(schema = @Schema(implementation = TimeEntryReport.class)))
+                    )
+            })
+    public ResponseEntity<Result> filterReportByTimePeriod(
+            @Parameter(description = "Time period for the report", example = "TODAY") @RequestParam TimePeriod timePeriod
+    ) {
+        ReportContext reportContext = new ReportContext();
+        reportContext.setTimePeriod(timePeriod);
+        return ResponseEntity.ok(new Result(
+                true,
+                HttpStatus.OK,
+                "TimeEntry Report - Criteria: Date",
+                this.dateBasedReportStrategy.generateReport(reportContext)
+        ));
+    }
+
     @GetMapping("/date")
     @Operation(
             summary = "TimeEntry Report - \"DATE\"",
@@ -95,9 +123,16 @@ public class TimeEntryReportController {
                             content = @Content(array = @ArraySchema(schema = @Schema(implementation = TimeEntryReport.class)))
                     )
             })
-    public ResponseEntity<Result> filterReportByDate(@RequestParam TimePeriod timePeriod) {
+    public ResponseEntity<Result> filterReportByDate(
+            @Parameter(description = "Start date for custom date range (format: YYYY-MM-DD)", example = "2024-01-01")
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+
+            @Parameter(description = "End date for custom date range (format: YYYY-MM-DD)", example = "2024-01-01")
+            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate
+    ) {
         ReportContext reportContext = new ReportContext();
-        reportContext.setTimePeriod(timePeriod);
+        reportContext.setStartDate(startDate);
+        reportContext.setEndDate(endDate);
         return ResponseEntity.ok(new Result(
                 true,
                 HttpStatus.OK,

@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @SuppressWarnings("FieldCanBeLocal")
@@ -61,6 +62,11 @@ public class TimeEntryServiceClient extends ServiceClient{
 
     public List<TimeEntry> getTimeEntriesForToday() {
         String url = this.timeEntryServiceBaseURL + "/date/today";
+        return getTimeEntriesAndConstructToList(url);
+    }
+
+    public List<TimeEntry> getTimeEntriesForSpecifiedDateRange(LocalDate startDate, LocalDate endDate) {
+        String url = this.timeEntryServiceBaseURL + "/date/range?startDate=" + startDate + "&endDate=" + endDate;
         return getTimeEntriesAndConstructToList(url);
     }
 

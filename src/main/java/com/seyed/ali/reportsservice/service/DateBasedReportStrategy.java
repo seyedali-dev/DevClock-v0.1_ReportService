@@ -22,13 +22,18 @@ public class DateBasedReportStrategy extends ReportStrategyBase {
     @Override
     public TimeEntryReport generateReport(ReportContext reportContext) {
         List<TimeEntry> timeEntryList;
-        switch (reportContext.getTimePeriod()) {
-            case TODAY -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForToday();
-            case LAST_DAY -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastDay();
-            case LAST_WEEK -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastWeek();
-            case LAST_MONTH -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastMonth();
-            default -> throw new OperationNotSupportedException("Invalid time period: " + reportContext.getTimePeriod());
-        }
+        if (reportContext.getTimePeriod() != null) {
+            switch (reportContext.getTimePeriod()) {
+                case TODAY -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForToday();
+                case LAST_DAY -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastDay();
+                case LAST_WEEK -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastWeek();
+                case LAST_MONTH -> timeEntryList = this.timeEntryServiceClient.getTimeEntriesForLastMonth();
+                default ->
+                        throw new OperationNotSupportedException("Invalid time period: " + reportContext.getTimePeriod());
+            }
+        } else
+            timeEntryList = this.timeEntryServiceClient.getTimeEntriesForSpecifiedDateRange(reportContext.getStartDate(), reportContext.getEndDate());
+
         Project project = this.getProject(timeEntryList);
         List<Task> allTasksForProject = this.getTasks(project.getProjectId());
 
