@@ -18,7 +18,7 @@ import java.util.List;
 @Component
 public class TimeEntryServiceClient extends ServiceClient{
 
-    private final String timeEntryServiceBaseURL = "http://localhost:8082/api/v1/time"; // TODO: remember to change the host and port when dockerizing the application
+    private final String timeEntryServiceBaseURL = "http://localhost:8082/api/v1/time/filter"; // TODO: remember to change the host and port when dockerizing the application
     private final ObjectMapper objectMapper;
 
     public TimeEntryServiceClient(KeycloakSecurityUtil keycloakSecurityUtil, WebClient.Builder webClientBuilder, ObjectMapper objectMapper) {
